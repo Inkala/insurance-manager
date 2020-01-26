@@ -2,9 +2,27 @@
 
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch');
-const cors = require('cors');
+const Policy = require('../models/Policy');
 
-const clientsUrl = 'https://www.mocky.io/v2/580891a4100000e8242b75c5';
+router.get('/', async (req, res, next) => {
+  try {
+    const policies = await Policy.find().populate('client');
+    res.status(200).json({ policies });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/:id/', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const policy = await Policy.findById(id).populate('client');
+    console.log(policy);
+    res.status(200).json({ policy });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 module.exports = router;

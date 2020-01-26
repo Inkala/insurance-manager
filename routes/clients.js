@@ -2,23 +2,26 @@
 
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch');
-const cors = require('cors');
+const Client = require('../models/Client');
 
-const clientsUrl = 'https://www.mocky.io/v2/5808862710000087232b75ac';
-
-router.get('/', (req, res, next) => {
-  fetch(clientsUrl)
-    .then(res => {
-      return res.json();
-    })
-    .then(data => {
-      console.log('Data >>>>>>:\n', data);
-      res.send({ data });
-    })
-    .catch(err => {
-      res.send(err);
-    });
+router.get('/', async (req, res, next) => {
+  try {
+    const clients = await Client.find();
+    res.status(200).json({ clients });
+  } catch (error) {
+    next(error);
+  }
 });
+
+router.get('/:id/', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const client = await Client.findById(id);
+    res.status(200).json({ client });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 module.exports = router;

@@ -16,6 +16,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const auth = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const clientsRouter = require('./routes/clients');
+const policiesRouter = require('./routes/policies');
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -63,6 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/auth', auth);
 app.use('/clients', clientsRouter);
+app.use('/policies', policiesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
