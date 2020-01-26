@@ -25,11 +25,12 @@ router.get('/by-client/', isLoggedIn(), isAdmin(), async (req, res, next) => {
   try {
     const clients = await Client.find({ name: new RegExp(name, 'i') });
     const policiesArr = clients.map(client => {
-      return Policy.findOne({ client: ObjectId(client._id) }).populate(
-        'client'
-      );
+      console.log(client);
+      
+      return Policy.find({ client: ObjectId(client._id) }).populate('client');
     });
-    const policies = await Promise.all(policiesArr);
+    const solvedPromises = await Promise.all(policiesArr);
+    const policies = solvedPromises.filter(policy => policy)
     res.status(200).json({ policies });
   } catch (error) {
     next(error);
@@ -38,15 +39,17 @@ router.get('/by-client/', isLoggedIn(), isAdmin(), async (req, res, next) => {
 
 router.get('/:id/', isLoggedIn(), isAdmin(), async (req, res, next) => {
   const { id } = req.params;
-
   try {
-    const policy = await Policy.findOne({ _id: id }).populate('client');
-    
-    // Returns all the information about the policy
-    // res.status(200).json({ policy });
+    const policy = await Policy.findById(id).populate('client');
+    if (!policy) {
+      next(createError(404));
+    } else {
+      // Returns all the information about the policy
+      res.status(200).json({ policy });
 
-    // Returns only the client linked to the policy
-    res.status(200).json({ client: policy.client });
+      // // Returns only the client linked to the policy
+      // res.status(200).json({ client: policy.client });
+    }
   } catch (error) {
     next(error);
   }
