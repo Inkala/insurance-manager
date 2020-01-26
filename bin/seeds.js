@@ -24,7 +24,6 @@ const policiesInstance = axios.create({
 
 const populateDatabase = () => {
   const updatePolicies = addData().then(res => {
-    // const clients = res[0];
     const policies = res[1];
 
     return policies.map(policy =>

@@ -11,7 +11,7 @@ const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
 require('dotenv').config();
 
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const auth = require('./routes/auth');
 const indexRouter = require('./routes/index');
@@ -21,8 +21,7 @@ mongoose
   .connect(process.env.MONGODB_URI, {
     keepAlive: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    reconnectTries: Number.MAX_VALUE
+    useUnifiedTopology: true
   })
   .then(() => {
     console.log(`Connected to database`);
