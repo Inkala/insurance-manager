@@ -20,7 +20,7 @@ exports.isNotLoggedIn = () => (req, res, next) => {
 
 exports.validationLoggin = () => (req, res, next) => {
   const { name, password } = req.body;
-
+  
   if (!name || !password) {
     next(createError(422));
   } else {
@@ -29,7 +29,7 @@ exports.validationLoggin = () => (req, res, next) => {
 };
 
 exports.isAdmin = () => (req, res, next) => {
-  if (req.session.currentUser) {
+  if (req.session.currentUser.admin) {
     console.log("From middleware", req.session.currentUser);
     
     next();
