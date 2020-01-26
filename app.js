@@ -8,16 +8,20 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const cors = require('cors');
 require('dotenv').config();
+
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const auth = require('./routes/auth');
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const clientsRouter = require('./routes/clients');
 
 mongoose
   .connect(process.env.MONGODB_URI, {
     keepAlive: true,
     useNewUrlParser: true,
+    useUnifiedTopology: true,
     reconnectTries: Number.MAX_VALUE
   })
   .then(() => {
@@ -28,6 +32,13 @@ mongoose
   });
 
 const app = express();
+
+app.use(
+  cors({
+    credentials: true,
+    origin: 'https://www.mocky.io/v2/5808862710000087232b75ac',
+  }),
+);
 
 app.use(
   session({
@@ -51,8 +62,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/auth', auth);
+app.use('/clients', clientsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -71,3 +82,5 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
+
+
