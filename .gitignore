@@ -28,3 +28,6 @@ desktop.ini
 
 # dotenv
 # .env removed for test to work only by cloning the repo.
+
+.vscode
+.eslintrc.json
