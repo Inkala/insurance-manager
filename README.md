@@ -36,7 +36,7 @@ You can also create users and specify their roles.
 
 For this test I chose to use [Node](https://nodejs.org/) with [Express](https://expressjs.com/) for the server side and [MongoDB](https://www.mongodb.com/) with [Mongoose](https://mongoosejs.com/) for the database.
 
-For fetching the information from the URL I used [axios](https://github.com/axios/axios), for the encrypting of the password I use [Bcrypt](https://github.com/kelektiv/node.bcrypt.js) and I added some testing with [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/).
+For fetching the information from the URL I used [axios](https://github.com/axios/axios) and for the encrypting of the password I use [Bcrypt](https://github.com/kelektiv/node.bcrypt.js).
 
 ### Success
 
@@ -44,20 +44,20 @@ All the functionalities that were added to the app are working as expected. The 
 
 ### Challenges
 
-I don't have much experience with testing so I had to do some research on that.
+All the asynchronous steps I had to take to properly populate and connect the two collections were quite challenging.
 
-Also, all the asynchronous steps I had to take to properly populate and connect the two collections were challenging.
+I also tried to add some tests with [Mocha](https://mochajs.org/), but I wasn't able to mock the connection to the database.
 
 ### What to improve
 
-If the test was longer, I could have created a full CRUD with editing and deleting the clients or policies.
+Sice all the data is in my database, I could have created a full CRUD with editing and deleting the clients or policies.
 
-There is a lot of work to be done on the error handling for missing information or empty results. I would have also liked to add more tests.
+There is a lot of work to be done on the error handling for missing information or empty results. I would have also liked to add some tests.
 
 ### Additional notes
 
 I left the `.env` out of the `.gitignore` file so you can run everything just by cloning the repo.
 
-For the policies I removed the `inseptionDate` because my models have a `timestamp` property, but I am not sure it they mean the same thing.
+For the policies I removed the `inseptionDate` because my models have a `timestamp` property, but I am not sure if they mean the same thing.
 
 Tried modifying mongo’s `_id` with the `id` from the fetched data, but wasn’t able to. So I removed the original id instead after populating the collections and creating the relationships.
