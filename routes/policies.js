@@ -25,12 +25,10 @@ router.get('/by-client/', isLoggedIn(), isAdmin(), async (req, res, next) => {
   try {
     const clients = await Client.find({ name: new RegExp(name, 'i') });
     const policiesArr = clients.map(client => {
-      console.log(client);
-      
       return Policy.find({ client: ObjectId(client._id) }).populate('client');
     });
     const solvedPromises = await Promise.all(policiesArr);
-    const policies = solvedPromises.filter(policy => policy)
+    const policies = solvedPromises.filter(policy => policy);
     res.status(200).json({ policies });
   } catch (error) {
     next(error);
