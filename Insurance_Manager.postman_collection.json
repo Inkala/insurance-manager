@@ -1,0 +1,275 @@
+{
+	"info": {
+		"_postman_id": "769f2a98-0e2d-4cf7-afe5-f562cdc3e639",
+		"name": "AXA Backend Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Zelda\",\n\t\"password\": \"Zelda\",\n\t\"email\": \"saria@mail.com\",\n\t\"role\": \"admin\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:{{port}}/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Zelda\",\n\t\"password\": \"Zelda\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:{{port}}/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:{{port}}/auth/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Clients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/clients",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get One Client",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/clients/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"clients",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "5e2d84f7a421f64753266b3f"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Client By Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/clients/search?name=reg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"clients",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "reg"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Policies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/policies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"policies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get One Policy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/policies/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"policies",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "5e2d84f8a421f64753266bcf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Policies By Client",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/policies/by-client?name=Manning",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"policies",
+						"by-client"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Manning"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a8b8112e-2ee7-4e42-918a-e758dff71514",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "64df2d84-dc3d-41a4-a946-0d7bf111c0bc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "80589359-0493-4fbf-8616-abd26eb1d9c0",
+			"key": "port",
+			"value": "3000",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
