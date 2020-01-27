@@ -23,24 +23,27 @@ const policiesInstance = axios.create({
 });
 
 const populateDatabase = () => {
-  const updatePolicies = addData().then(res => {
+  addData().then(res => {
     const policies = res[1];
 
     return policies.map(policy =>
       Client.findOne({ id: policy.clientId })
         .then(client => {
+          client.id = undefined;
+          return client.save();
+        })
+        .then(client => {
           policy.client = client._id;
-          policy.save();
+          policy.clientId = undefined;
+          return policy.save();
         })
         .catch(err => console.log(err))
     );
-  });
-
-  updatePolicies
-    .then(updatePolicies => Promise.all(updatePolicies))
-    .then(() => {
-      console.log('Fetched data inserted');
-      // mongoose.connection.close()
+  }).then(policies => Promise.all(policies))
+    .then(res => {
+      console.log('Fetched data inserted...');
+      mongoose.connection.close()
+      console.log('Connection closed');
     })
     .catch(err => console.log(err));
 };
@@ -52,7 +55,7 @@ const dropTheCollections = () => {
 
   Promise.all([pr1, pr2])
     .then(() => {
-      console.log('Collections dropped');
+      console.log('Collections dropped...');
       populateDatabase();
     })
     .catch(err => console.log(err));
@@ -73,7 +76,7 @@ const insertFirst = () => {
 
   Promise.all([pr1, pr2])
     .then(() => {
-      console.log('Dummy data inserted');
+      console.log('Dummy data inserted...');
       dropTheCollections();
     })
     .catch(err => console.log(err));
@@ -97,20 +100,4 @@ mongoose
     useUnifiedTopology: true
   })
   .then(() => insertFirst())
-  // .then(() => mongoose.connection.close())
   .catch(err => console.log(err));
-
-// const insertSeed = async () => {
-//   try {
-//     await mongoose.connect(process.env.MONGODB_URI, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true
-//     });
-//     await insertFirst();
-//     // mongoose.connection.close();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// insertSeed();
