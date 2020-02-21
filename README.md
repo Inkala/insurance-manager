@@ -2,7 +2,7 @@
 
 To see this test working, clone the repository, type `npm install` from the root folder.
 
-There is a seeds file to populate the database with the information from the provided URLs. With Mongo running, from the root folder, type  `node bin/seeds.js` and then `npm run dev`.
+There is a seeds file to populate the database with the information from the provided URLs. With `Mongo` running, from the root folder, type  `node bin/seeds.js` and then `npm run dev`.
 
 There is also an `Auth.postman_collection.json` file with examples for all the routes used that can be imported on Postman.
 
