@@ -5,7 +5,7 @@ const createError = require('http-errors');
 
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const saltRounds = 10
+const saltRounds = 10;
 
 const User = require('../models/User');
 
@@ -25,14 +25,16 @@ router.post(
   validationLoggin(),
   async (req, res, next) => {
     const { name, password } = req.body;
-    
+
     try {
       const user = await User.findOne({ name });
       if (!user) {
         next(createError(404));
       } else if (bcrypt.compareSync(password, user.password)) {
         req.session.currentUser = user;
-        return res.status(200).json(user);
+        return res
+          .status(200)
+          .json(`User ${user.name} has logged in successfully`);
       } else {
         next(createError(401));
       }
@@ -56,9 +58,16 @@ router.post(
       } else {
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPass = bcrypt.hashSync(password, salt);
-        const newUser = await User.create({ name, password: hashPass, email, role });
+        const newUser = await User.create({
+          name,
+          password: hashPass,
+          email,
+          role
+        });
         req.session.currentUser = newUser;
-        res.status(200).json(newUser);
+        res
+          .status(200)
+          .json(`New User user ${newUser.name} has been created`);
       }
     } catch (error) {
       next(error);
@@ -68,7 +77,7 @@ router.post(
 
 router.post('/logout', isLoggedIn(), (req, res, next) => {
   req.session.destroy();
-  return res.status(204).send();
+  return res.status(200).json('User logged out');
 });
 
 module.exports = router;
